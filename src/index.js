@@ -10,10 +10,13 @@ let select = new SlimSelect({
   select: '.breed-select',
 });
 
+const containerEl = document.querySelector('.container');
 const selectEl = document.querySelector('.breed-select');
 const catInfoEl = document.querySelector('.cat-info');
 const errorEl = document.querySelector('.error');
 const loaderEl = document.querySelector('.loader');
+
+containerEl.classList.add('isHidden');;
 
 fetchBreeds()
   .then(data => {
@@ -22,7 +25,10 @@ fetchBreeds()
   .catch(err => {
     errorEl.classList.add('isVisible');
   })
-  .finally(() => loaderEl.classList.add('isHidden'));
+  .finally(() => {
+    loaderEl.classList.add('isHidden');
+    containerEl.classList.remove('isHidden');
+  });
 
 function selectItem(event) {
   const breedId = event.currentTarget.value;
