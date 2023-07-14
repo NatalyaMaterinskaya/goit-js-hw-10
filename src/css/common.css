@@ -1,0 +1,20 @@
+*{
+    box-sizing: border-box;
+}
+.selected-item{
+     min-width: 200px;
+     font-size: 16px;
+     color: #f0ecef;
+     background-color: #3f0229;
+     border-color:#ff00b3;
+     border-radius: 50px;
+     cursor: pointer;
+     padding: 10px;
+
+}   
+.breed-select{
+    font-size: 14px;
+    color: #ff00b3;
+    background-color:#3f0229;
+}
+
