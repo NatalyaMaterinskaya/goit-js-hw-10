@@ -27,17 +27,28 @@ img {
 }
 
 .container {
+  display: block;
   margin-top: 20px;
   margin-left: 20px;
   max-width: 300px;
-  display: none;
 }
 
 .loader {
   display: block;
+  margin-top: 20px;
+  margin-left: 20px;
 }
 
 .error {
+  display: none;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.isVisible {
+  display: block;
+}
+.isHidden {
   display: none;
 }
 .cat-info {
@@ -51,15 +62,14 @@ img {
 .all-cat-description {
   margin-left: 20px;
 }
-.name{
-    margin-top: 10px;
-    /* margin-bottom: 30px; */
+.name {
+  margin-top: 10px;
 }
-.description{
-    margin-top: 30px;
-    margin-bottom: 30px;
+.description {
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
-.temperament span{
-    font-weight: 600;
+.temperament span {
+  font-weight: 600;
 }

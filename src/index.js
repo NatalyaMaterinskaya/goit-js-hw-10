@@ -8,12 +8,8 @@ import {
 
 let select = new SlimSelect({
   select: '.breed-select',
-  settings: {
-    placeholderText: 'please select a cat breed',
-  },
 });
 
-const containerEl = document.querySelector('.container');
 const selectEl = document.querySelector('.breed-select');
 const catInfoEl = document.querySelector('.cat-info');
 const errorEl = document.querySelector('.error');
@@ -21,21 +17,20 @@ const loaderEl = document.querySelector('.loader');
 
 fetchBreeds()
   .then(data => {
-    containerEl.style.display = 'block';
     select.setData(createMarkup(data));
   })
   .catch(err => {
-    containerEl.style.display = 'none';
-    errorEl.style.display = 'block';
+    errorEl.classList.add('isVisible');
   })
-  .finally(() => (loaderEl.style.display = 'none'));
+  .finally(() => loaderEl.classList.add('isHidden'));
 
 function selectItem(event) {
   const breedId = event.currentTarget.value;
+  loaderEl.classList.remove('isHidden');
+  errorEl.classList.remove('isVisible');
+  catInfoEl.classList.add('isHidden');
   fetchCatByBreed(breedId)
     .then(data => {
-      containerEl.style.display = 'block';
-      console.log(data);
       const markup = data
         .map(
           ({ url, breeds: [{ name, description, temperament }] }) =>
@@ -57,9 +52,11 @@ function selectItem(event) {
       catInfoEl.innerHTML = markup;
     })
     .catch(err => {
-      containerEl.style.display = 'none';
-      errorEl.style.display = 'block';
+      errorEl.classList.add('isVisible');
     })
-    .finally(() => (loaderEl.style.display = 'none'));
+    .finally(() => {
+      loaderEl.classList.add('isHidden');
+      catInfoEl.classList.remove('isHidden');
+    });
 }
 selectEl.addEventListener('change', selectItem);
