@@ -22,9 +22,4 @@ export function fetchCatByBreed(breedId) {
   });
 }
 
-export function createMarkup(arr) {
-  return arr.map(({ id, name }) => {
-    return { text: `${name}`, value: `${id}` };
-  });
-}
 

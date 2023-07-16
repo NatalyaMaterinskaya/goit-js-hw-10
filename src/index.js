@@ -1,13 +1,14 @@
 import SlimSelect from 'slim-select';
 import {
   fetchBreeds,
-  createMarkup,
-  createArr,
   fetchCatByBreed,
 } from './cat-api';
 
 let select = new SlimSelect({
   select: '.breed-select',
+  settings: {
+    allowDeselect: true,
+  },
 });
 
 const containerEl = document.querySelector('.container');
@@ -17,6 +18,12 @@ const errorEl = document.querySelector('.error');
 const loaderEl = document.querySelector('.loader');
 
 containerEl.classList.add('isHidden');;
+
+function createMarkup(arr) {
+  return arr.map(({ id, name }) => {
+    return { text: `${name}`, value: `${id}` };
+  });
+}
 
 fetchBreeds()
   .then(data => {
@@ -30,13 +37,20 @@ fetchBreeds()
     containerEl.classList.remove('isHidden');
   });
 
+  
 function selectItem(event) {
   const breedId = event.currentTarget.value;
+  
   loaderEl.classList.remove('isHidden');
   errorEl.classList.remove('isVisible');
   catInfoEl.classList.add('isHidden');
+
   fetchCatByBreed(breedId)
     .then(data => {
+      if (data.length === 0) {
+        catInfoEl.innerHTML = '';
+        throw new Error();
+      }
       const markup = data
         .map(
           ({ url, breeds: [{ name, description, temperament }] }) =>
@@ -44,6 +58,7 @@ function selectItem(event) {
             <img
               class="cat-info-image"
               src="${url}"
+              alt="${name}"
               width="400"
             />
             <div class="all-cat-description">
@@ -65,4 +80,10 @@ function selectItem(event) {
       catInfoEl.classList.remove('isHidden');
     });
 }
-selectEl.addEventListener('change', selectItem);
+
+
+function onClick(event) {
+  selectEl.addEventListener('change', selectItem);
+}
+
+containerEl.addEventListener('click', onClick);
